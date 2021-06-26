@@ -32,7 +32,7 @@ Parametes    isbn
 Method       GET
 */ 
 
-TheBook.get("/:isbn", (request, response) => {
+TheBook.get("/is/:isbn", (request, response) => {
     const getSpecificBook = database.books.filter(
         (book) => book.ISBN === request.params.isbn
         );
@@ -71,7 +71,33 @@ TheBook.get("/c/:category", (request, response) => {
 
 
 });
- 
+
+/* 
+Route        /author
+Description  get all authors
+Access       PUBLIC
+Parametes    NONE
+Method       GET
+*/ 
+
+TheBook.get("/author" ,( request, response) => {
+    return response.json({ authors: database.authors});
+});
+
+ /* 
+Route        /author
+Description  get all authors
+Access       PUBLIC
+Parametes    isbn
+Method       GET
+*/ 
+
+TheBook.get("/author/:isbn" ,( request, response) => {
+    const getSpecificAuthors = database.authors.filter((author) => author.books.includes
+    (req.params.isbn));
+
+});
+
 
 
 
