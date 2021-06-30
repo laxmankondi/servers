@@ -1,11 +1,15 @@
+
 // Frame work
 const express = require("express");
+
+
 // Database
 const database = require("./database/index");
 // Initializing express
 const shapeAI = express();
 // Configurations
 shapeAI.use(express.json());
+
 /*
 Route           /
 Description     get all books
@@ -161,5 +165,56 @@ shapeAI.put("/book/author/update/:isbn", (req, res) => {
     message: "New author was added 🚀",
   });
 });
+
+package-lock.json
+
+/*   
+
+
+
+*/
+shapeAI.put("/publication/update/book/:isbn", (req, res) => {
+  // update the publication database
+  database.publications.forEach((publication) => {
+    if (publication.id === req.body.pubId) {
+      return publication.books.push(req.params.isbn);
+    }
+  });
+
+  // update the book database
+  database.books.forEach((book) => {
+    if (book.ISBN === req.params.isbn) {
+      book.publication = req.body.pubId;
+      return;
+    }
+  });
+
+  return res.json({
+    books: database.books,
+    publications: database.publications,
+    message: "Successfully updated publication",
+  });
+});
+
+/*
+Route           /delete/book
+Description     update/add new author
+Access          PUBLIC
+Parameters      isbn
+Method          PUT
+*/
+
+
+
+
+
 shapeAI.listen(3000, () => console.log("Server Is running!!"));
+
+
+
+
+
+
+
+
 
